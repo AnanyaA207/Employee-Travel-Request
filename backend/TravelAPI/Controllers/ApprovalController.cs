@@ -24,11 +24,21 @@ public class ApprovalController : ControllerBase
         approval.ApprovedAt = DateTime.Now;
         _db.Approvals.Add(approval);
 
-        // Update the travel request status to match the decision
         var request = await _db.TravelRequests.FindAsync(approval.RequestId);
-        if (request != null)
+
+        // If manager sends NeedMoreInfo for the first time, set status to NeedMoreInfo
+        if (request != null && approval.Decision == "NeedMoreInfo" && request.Status == "Pending")
         {
-            request.Status = approval.Decision; // "Approved" or "Rejected"
+            request.Status = "NeedMoreInfo";
+        }
+
+        // Only update status for actual decisions (Approved or Rejected)
+        // EmployeeReply and NeedMoreInfo messages do NOT change the status
+        if (request != null &&
+            approval.Decision != "EmployeeReply" &&
+            approval.Decision != "NeedMoreInfo")
+        {
+            request.Status = approval.Decision;
         }
 
         await _db.SaveChangesAsync();
