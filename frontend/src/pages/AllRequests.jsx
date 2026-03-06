@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllRequests, deleteRequest } from '../services/api';
+import { getAllRequests, deleteRequest, getAllEmployees } from '../services/api';
 
 const STATUS = {
   Pending:      { bg: '#fef3c7', text: '#92400e', border: '#fcd34d' },
@@ -9,13 +9,19 @@ const STATUS = {
 };
 
 export default function AllRequests() {
-  const [requests, setRequests] = useState([]);
-  const [loading, setLoading]   = useState(true);
-  const [filter, setFilter]     = useState('All');
+  const [requests, setRequests]   = useState([]);
+  const [employees, setEmployees] = useState({});
+  const [loading, setLoading]     = useState(true);
+  const [filter, setFilter]       = useState('All');
 
   useEffect(() => {
-    getAllRequests()
-      .then(res => setRequests(res.data))
+    Promise.all([getAllRequests(), getAllEmployees()])
+      .then(([reqRes, empRes]) => {
+        setRequests(reqRes.data);
+        const map = {};
+        empRes.data.forEach(e => { map[e.employeeId] = e.name; });
+        setEmployees(map);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -87,7 +93,9 @@ export default function AllRequests() {
                     <td style={s.td}>
                       <span style={{ fontWeight: 700, color: '#1a56db' }}>#{req.requestId}</span>
                     </td>
-                    <td style={s.td}>Emp #{req.employeeId}</td>
+                    <td style={s.td}>
+                      {employees[req.employeeId] || `Emp #${req.employeeId}`}
+                    </td>
                     <td style={{ ...s.td, fontWeight: 600 }}>{req.destination}</td>
                     <td style={{ ...s.td, color: '#64748b', maxWidth: 180, overflow: 'hidden',
                       textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

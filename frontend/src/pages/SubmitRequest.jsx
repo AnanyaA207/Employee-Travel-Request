@@ -2,11 +2,18 @@ import { useState } from 'react';
 import { submitRequest } from '../services/api';
 
 export default function SubmitRequest() {
-  // This MUST be the first line inside the component
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = (() => {
+    try { return JSON.parse(localStorage.getItem('user')); }
+    catch { return null; }
+  })();
+
+  if (!user) {
+    window.location.href = '/login';
+    return null;
+  }
 
   const [form, setForm] = useState({
-    employeeId: user?.employeeId || 1,
+    employeeId: user.employeeId,
     destination: '',
     purpose: '',
     travelStartDate: '',
@@ -98,7 +105,7 @@ export default function SubmitRequest() {
               <div style={s.field}>
                 <label style={s.label}>Destination *</label>
                 <input name="destination" value={form.destination} onChange={handleChange}
-                  required style={s.input} placeholder="e.g. Mumbai" />
+                  required style={s.input} />
               </div>
               <div style={s.field}>
                 <label style={s.label}>Mode of Travel</label>
@@ -114,8 +121,7 @@ export default function SubmitRequest() {
             <div style={s.fieldFull}>
               <label style={s.label}>Purpose of Travel *</label>
               <textarea name="purpose" value={form.purpose} onChange={handleChange}
-                required style={{ ...s.input, height: 80, resize: 'vertical' }}
-                placeholder="e.g. Client meeting with XYZ Corp" />
+                required style={{ ...s.input, height: 80, resize: 'vertical' }} />
             </div>
 
             {/* Row 2 */}
@@ -175,23 +181,23 @@ export default function SubmitRequest() {
 }
 
 const s = {
-  page:        { width: '100%' },
-  pageTitle:   { fontSize: 28, fontWeight: 700, color: '#1e293b', marginBottom: 6 },
-  pageSubtitle:{ fontSize: 15, color: '#64748b', marginBottom: 24 },
-  card:        { background: '#fff', borderRadius: 12, padding: 32, boxShadow: '0 1px 4px rgba(0,0,0,0.08)', marginBottom: 24 },
-  row:         { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 },
-  field:       { display: 'flex', flexDirection: 'column' },
-  fieldFull:   { display: 'flex', flexDirection: 'column', marginBottom: 16 },
-  label:       { fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 6 },
-  input:  { padding: '10px 12px', fontSize: 14, borderRadius: 8, border: '1.5px solid #e2e8f0',
-           background: '#f8fafc', outline: 'none', width: '100%', color: '#1e293b', colorScheme: 'light' },
-  btnPrimary:  { padding: '12px 24px', background: '#1a56db', color: '#fff', border: 'none',
-                 borderRadius: 8, cursor: 'pointer', fontSize: 15, fontWeight: 600 },
-  errorBanner: { background: '#fef2f2', border: '1px solid #fecaca', color: '#991b1b',
-                 padding: '12px 16px', borderRadius: 8, marginBottom: 20, fontSize: 14 },
-  infoGrid:    { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 24 },
-  infoBox:     { background: '#f8fafc', borderRadius: 8, padding: '14px 16px',
-                 display: 'flex', flexDirection: 'column', gap: 4, border: '1px solid #e2e8f0' },
-  infoLabel:   { fontSize: 12, color: '#64748b', fontWeight: 500 },
-  infoValue:   { fontSize: 18, fontWeight: 700, color: '#1e293b' },
+  page:         { width: '100%' },
+  pageTitle:    { fontSize: 28, fontWeight: 700, color: '#1e293b', marginBottom: 6 },
+  pageSubtitle: { fontSize: 15, color: '#64748b', marginBottom: 24 },
+  card:         { background: '#fff', borderRadius: 12, padding: 32, boxShadow: '0 1px 4px rgba(0,0,0,0.08)', marginBottom: 24 },
+  row:          { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 },
+  field:        { display: 'flex', flexDirection: 'column' },
+  fieldFull:    { display: 'flex', flexDirection: 'column', marginBottom: 16 },
+  label:        { fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 6 },
+  input:        { padding: '10px 12px', fontSize: 14, borderRadius: 8, border: '1.5px solid #e2e8f0',
+                  background: '#f8fafc', outline: 'none', width: '100%', color: '#1e293b', colorScheme: 'light' },
+  btnPrimary:   { padding: '12px 24px', background: '#1a56db', color: '#fff', border: 'none',
+                  borderRadius: 8, cursor: 'pointer', fontSize: 15, fontWeight: 600 },
+  errorBanner:  { background: '#fef2f2', border: '1px solid #fecaca', color: '#991b1b',
+                  padding: '12px 16px', borderRadius: 8, marginBottom: 20, fontSize: 14 },
+  infoGrid:     { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 24 },
+  infoBox:      { background: '#f8fafc', borderRadius: 8, padding: '14px 16px',
+                  display: 'flex', flexDirection: 'column', gap: 4, border: '1px solid #e2e8f0' },
+  infoLabel:    { fontSize: 12, color: '#64748b', fontWeight: 500 },
+  infoValue:    { fontSize: 18, fontWeight: 700, color: '#1e293b' },
 };

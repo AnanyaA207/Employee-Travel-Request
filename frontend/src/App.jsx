@@ -5,6 +5,7 @@ import AllRequests      from './pages/AllRequests';
 import AddItinerary     from './pages/AddItinerary';
 import Login            from './pages/Login';
 import MyItinerary      from './pages/MyItinerary';
+import MyRequests       from './pages/MyRequests';
 
 // Returns the logged-in user from localStorage, or null
 function getUser() {
@@ -39,6 +40,7 @@ function NavBar() {
     { to: '/all',        label: '📄 All Requests',   roles: ['Manager', 'Admin'] },
     { to: '/itinerary',  label: '📅 Itinerary',      roles: ['Admin'] },
     { to: '/my-itinerary', label: '📅 My Itinerary', roles: ['Employee'] },
+    { to: '/my-requests', label: '📋 My Requests', roles: ['Employee'] },
   ];
 
   const visibleLinks = allLinks.filter(l => l.roles.includes(user.role));
@@ -118,6 +120,12 @@ export default function App() {
             <Route path="/itinerary" element={
               <ProtectedRoute allowedRoles={['Admin']}>
                 <AddItinerary />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/my-requests" element={
+              <ProtectedRoute allowedRoles={['Employee']}>
+                <MyRequests />
               </ProtectedRoute>
             } />
 

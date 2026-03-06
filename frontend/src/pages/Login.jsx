@@ -97,7 +97,7 @@ export default function Login() {
               type="email"
               value={loginEmail}
               onChange={e => setLoginEmail(e.target.value)}
-              placeholder="e.g. rahul@company.com"
+          
               required
               style={s.input}
             />
@@ -115,7 +115,7 @@ export default function Login() {
               name="name"
               value={regForm.name}
               onChange={handleRegChange}
-              placeholder="e.g. Rahul Sharma"
+              
               required
               style={s.input}
             />
@@ -126,7 +126,7 @@ export default function Login() {
               name="email"
               value={regForm.email}
               onChange={handleRegChange}
-              placeholder="e.g. rahul@company.com"
+              
               required
               style={s.input}
             />
@@ -136,7 +136,7 @@ export default function Login() {
               name="department"
               value={regForm.department}
               onChange={handleRegChange}
-              placeholder="e.g. Engineering, Sales, HR"
+              
               style={s.input}
             />
 

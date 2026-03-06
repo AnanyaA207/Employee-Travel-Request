@@ -24,3 +24,6 @@ export const getItineraryByReq   = (reqId)       => API.get(`/itinerary/request/
 // ── Employees ────────────────────────────────────────────────────────────
 export const getAllEmployees      = ()            => API.get('/employee');
 export const deleteRequest = (id) => API.delete(`/travelrequest/${id}`);
+
+
+export const addComment        = (data)  => API.post('/approval', data);
