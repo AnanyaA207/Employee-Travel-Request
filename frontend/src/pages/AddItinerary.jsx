@@ -170,14 +170,14 @@ export default function AddItinerary() {
                     <div>
                       <label style={s.label}>Flight Details</label>
                       <input name="flightDetails" value={form.flightDetails}
-                        onChange={handleChange} style={s.input}
-                        placeholder="e.g. AI202 DEL→BOM 08:30" />
+                        onChange={handleChange} style={s.input} />
+                        
                     </div>
                     <div>
                       <label style={s.label}>Hotel Name</label>
                       <input name="hotelName" value={form.hotelName}
-                        onChange={handleChange} style={s.input}
-                        placeholder="e.g. Taj Hotels Mumbai" />
+                        onChange={handleChange} style={s.input} />
+                        
                     </div>
                     <div>
                       <label style={s.label}>Hotel Check-in</label>
@@ -193,15 +193,15 @@ export default function AddItinerary() {
                   <div style={{ marginBottom: 14 }}>
                     <label style={s.label}>Local Transport</label>
                     <input name="localTransport" value={form.localTransport}
-                      onChange={handleChange} style={s.input}
-                      placeholder="e.g. Cab arranged by office" />
+                      onChange={handleChange} style={s.input} />
+                      
                   </div>
                   <div style={{ marginBottom: 20 }}>
                     <label style={s.label}>Meeting Schedule</label>
                     <textarea name="meetingSchedule" value={form.meetingSchedule}
                       onChange={handleChange} rows={3}
-                      style={{ ...s.input, resize: 'vertical' }}
-                      placeholder="e.g. 10am - Client meeting, 3pm - Site visit" />
+                      style={{ ...s.input, resize: 'vertical' }} />
+                    
                   </div>
                   <button type="submit" style={{ ...s.btnPrimary, width: '100%' }}>
                     💾 {existing ? 'Update Itinerary' : 'Save Itinerary'}

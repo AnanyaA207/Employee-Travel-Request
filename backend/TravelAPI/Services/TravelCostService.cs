@@ -12,8 +12,7 @@ public class TravelCostService
 
     private const decimal DOMESTIC_FOOD_PER_DAY     = 500m;   // ₹500/day domestic
     private const decimal INTERNATIONAL_FOOD_PER_DAY = 2500m;  // ₹2500/day international
-    private const decimal BIKE_RATE_PER_KM           = 8m;     // ₹8/km for bike
-    private const decimal CAR_RATE_PER_KM            = 12m;    // ₹12/km for car
+   
     private const decimal HOTEL_DOMESTIC_PER_NIGHT   = 2000m;  // ₹2000/night domestic hotel
     private const decimal HOTEL_INTL_PER_NIGHT       = 8000m;  // ₹8000/night international hotel
 
@@ -46,18 +45,12 @@ public class TravelCostService
 
         // 5. Total = Food + Hotel + Travel + Miscellaneous (10% buffer)
         decimal subtotal = foodAllowance + hotelCost + travelCost;
-        decimal miscBuffer = subtotal * 0.10m;  // 10% for miscellaneous expenses
-        decimal totalCost = subtotal + miscBuffer;
+        decimal totalCost = subtotal;
 
         return (Math.Round(foodAllowance, 2), Math.Round(totalCost, 2));
     }
 
     // ── Helper: Distance reimbursement for personal vehicle ─────────────────
 
-    public decimal CalculateVehicleReimbursement(decimal distanceKm, string vehicleType)
-    {
-        // vehicleType: "Bike" or "Car"
-        decimal rate = vehicleType == "Car" ? CAR_RATE_PER_KM : BIKE_RATE_PER_KM;
-        return Math.Round(distanceKm * rate, 2);
-    }
+   
 }
